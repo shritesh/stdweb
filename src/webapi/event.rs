@@ -196,6 +196,52 @@ reference_boilerplate! {
     instanceof Event
 }
 
+
+/// The `OpenEvent` is fired for WebSocket Open
+///
+/// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/Events/open_websocket)
+pub struct OpenEvent( Reference );
+
+impl IEvent for OpenEvent {}
+impl ConcreteEvent for OpenEvent {
+    const EVENT_TYPE: &'static str = "open";
+}
+
+reference_boilerplate! {
+    OpenEvent,
+    instanceof Event
+    convertible to Event
+}
+
+/// The `MessageEvent` interface represents simple user interface events.
+///
+/// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
+pub struct MessageEvent( Reference );
+
+impl IEvent for MessageEvent {}
+impl ConcreteEvent for MessageEvent {
+    const EVENT_TYPE: &'static str = "message";
+}
+
+reference_boilerplate! {
+    MessageEvent,
+    instanceof Event
+    convertible to Event
+}
+
+impl MessageEvent{
+    /// Provides the current click count for this event, if applicable.
+    ///
+    /// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
+    #[inline]
+    pub fn data( &self ) -> String {
+        js!(
+            return @{self.as_ref()}.data;
+        ).into_string().unwrap()
+    }
+}
+
+
 /// The `ChangeEvent` is fired for input, select, and textarea
 /// elements when a change to the element's value is committed
 /// by the user. Unlike the input event, the change event is not
